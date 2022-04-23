@@ -2,10 +2,13 @@ const express = require('express');
 const { ENV, PORT } = require('./config');
 
 const app = express();
-const users = [];
+
+let users = [];
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
-  return res.json({
+  return res.status(200).json({
     users,
   });
 });
@@ -13,27 +16,28 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   const user = req.body;
   users.push(user);
-  return res.json({
+  return res.status(201).json({
     users,
   });
 });
 
 app.put('/:id', (req, res) => {
-  /* const user = req.body;
-  const id = req.params.id;
-  users.map((user, index) => {
-    if (user.id === id) {
-    }
-  }); */
-  return res.json({
+  const {
+    body,
+    params: { id },
+  } = req;
+
+  users = users.map((user) => (user.id === id ? body : user));
+
+  return res.status(200).json({
     users,
   });
 });
 
 app.delete('/:id', (req, res) => {
   const id = req.params.id;
-  users.filter((user) => user.id !== id);
-  return res.json({
+  users = users.filter((user) => id !== user.id);
+  return res.status(200).json({
     users,
   });
 });
