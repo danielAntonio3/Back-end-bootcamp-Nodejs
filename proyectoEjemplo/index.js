@@ -1,19 +1,44 @@
-const http = require('http');
-const server = http.createServer();
-
+const express = require('express');
 const { ENV, PORT } = require('./config');
 
-// ? La forma en que NodeJS trabajo el backend (por medio de eventos)
-server.on('request', (request, response) => {
-  if (request.method === 'POST' && request.url === '/datos') {
-    // TODO: Regresar al momento de ver Streams
-  }
+const app = express();
+const users = [];
 
-  response.statusCode = 200;
-  response.end('Hola mundo');
+app.get('/', (req, res) => {
+  return res.json({
+    users,
+  });
 });
 
-server.listen(PORT, () => {
+app.post('/', (req, res) => {
+  const user = req.body;
+  users.push(user);
+  return res.json({
+    users,
+  });
+});
+
+app.put('/:id', (req, res) => {
+  /* const user = req.body;
+  const id = req.params.id;
+  users.map((user, index) => {
+    if (user.id === id) {
+    }
+  }); */
+  return res.json({
+    users,
+  });
+});
+
+app.delete('/:id', (req, res) => {
+  const id = req.params.id;
+  users.filter((user) => user.id !== id);
+  return res.json({
+    users,
+  });
+});
+
+app.listen(PORT, () => {
   console.log(
     `Servidor corriendo en ${ENV} en el puerto http://localhost:${PORT}`
   );
