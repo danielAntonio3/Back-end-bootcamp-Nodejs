@@ -12,6 +12,7 @@
   "author": "Daniel Antonio <daniel23.da74@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
     "express": "^4.18.0",

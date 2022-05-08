@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const authValidation = require('../middleware/authValidation');
 const User = require('./../services/user');
 
 function Users(app) {
@@ -7,7 +8,7 @@ function Users(app) {
 
   app.use('/api/users', router);
 
-  router.get('/', async (req, res) => {
+  router.get('/', authValidation, async (req, res) => {
     const users = await userService.getAllUsers();
     return res.status(200).json({
       data: users,

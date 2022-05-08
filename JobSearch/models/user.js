@@ -33,6 +33,10 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  role: {
+    type: String,
+    enum: ['admin', 'user'],
+  },
   createIn: {
     type: Date,
     default: Date.now,
@@ -42,3 +46,5 @@ const UserSchema = new Schema({
 const UserModel = mongoose.model('Users', UserSchema);
 
 module.exports = UserModel;
+
+// minuto 36:29
