@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const authValidation = require('../middleware/authValidation');
+const { authValidation, acceptRoles } = require('../middleware/authValidation');
 const User = require('./../services/user');
 
 function Users(app) {
@@ -8,7 +8,7 @@ function Users(app) {
 
   app.use('/api/users', router);
 
-  router.get('/', authValidation, async (req, res) => {
+  router.get('/', [authValidation, acceptRoles('admin')], async (req, res) => {
     const users = await userService.getAllUsers();
     return res.status(200).json({
       data: users,
@@ -29,7 +29,7 @@ function Users(app) {
     });
   });
 
-  router.delete('/:id', async (req, res) => {
+  router.delete('/:id', [authValidation, acceptRoles('admin')], async (req, res) => {
     const user = await userService.deleteUser(req.params.id);
     return res.status(200).json({
       data: user,

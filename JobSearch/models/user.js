@@ -35,7 +35,7 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'user'],
+    enum: ['admin', 'employer', 'applicant'],
   },
   createIn: {
     type: Date,
@@ -46,5 +46,3 @@ const UserSchema = new Schema({
 const UserModel = mongoose.model('Users', UserSchema);
 
 module.exports = UserModel;
-
-// minuto 36:29

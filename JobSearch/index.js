@@ -6,6 +6,8 @@ const { connection } = require('./config/db');
 // importación de routes
 const Users = require('./routers/user');
 const Auths = require('./routers/auth');
+const Categories = require('./routers/category');
+const jobs = require('./routers/job');
 
 // Iniciar base de datos
 connection();
@@ -18,6 +20,8 @@ app.use(express.json());
 
 Users(app);
 Auths(app);
+Categories(app);
+jobs(app);
 
 app.get('/', (req, res) => {
   return res.status(200).json({

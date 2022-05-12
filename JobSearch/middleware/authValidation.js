@@ -2,18 +2,43 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('./../config');
 
 function authValidation(req, res, next) {
-  const token = req.headers.authorization.split(' ')[1];
-  if (token) {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    // console.log(decoded);
-    // req.user = decoded;
-    return next();
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    const token = req.headers.authorization.split(' ')[1];
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.user = decoded;
+        return next();
+      } catch ({ name, message }) {
+        return res.status(403).json({
+          error: true,
+          message,
+          type: name,
+        });
+      }
+    }
   }
-
-  return res.status(401).json({
+  return res.status(403).json({
     error: true,
-    message: 'No tienes permisos suficientes',
+    message: 'Insufficient permissions',
   });
 }
 
-module.exports = authValidation;
+const acceptRoles = (...roles) => {
+  return (req = request, res = response, next) => {
+
+    if (!roles.includes(req.user.role)) {
+      return res.status(401).json(
+        {
+          msg: 'Insufficient permissions'
+        });
+    }
+    next();
+  }
+
+}
+
+module.exports = { acceptRoles, authValidation };

@@ -26,7 +26,7 @@ class User {
     } catch (error) {
       console.log('Error:', error);
       if (error.code === 11000) {
-        const message = `El correo "${error.keyValue.email}" ya está en uso`;
+        const message = `The email ${error.keyValue.email} is already exist.`;
 
         return {
           error: true,
