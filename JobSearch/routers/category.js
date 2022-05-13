@@ -9,7 +9,7 @@ function categories(app) {
   app.use('/api/category', router);
 
   router.get('/', async (req, res) => {
-    const categories = await categoryService.getAllCategory();
+    const categories = await categoryService.getAllCategory(req.query);
     return res.status(200).json({
       data: categories,
     });

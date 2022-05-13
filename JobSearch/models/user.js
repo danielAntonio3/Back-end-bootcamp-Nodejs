@@ -37,6 +37,12 @@ const UserSchema = new Schema({
     type: String,
     enum: ['admin', 'employer', 'applicant'],
   },
+  job: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Jobs',
+    },
+  ],
   createIn: {
     type: Date,
     default: Date.now,

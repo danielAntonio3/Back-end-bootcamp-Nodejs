@@ -1,9 +1,14 @@
 const CategoryModel = require('./../models/category');
 
 class Category {
-  async getAllCategory() {
+  async getAllCategory(query) {
+    const { job } = query;
     try {
-      const categories = await CategoryModel.find().populate('job', 'name country description');
+      if (job) {
+        const categories = await CategoryModel.find().populate('job', 'name country description');
+        return categories;
+      }
+      const categories = await CategoryModel.find();
       return categories;
     } catch (error) {
       console.log('Error:', error);

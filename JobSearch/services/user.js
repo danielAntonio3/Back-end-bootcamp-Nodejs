@@ -10,6 +10,18 @@ class User {
     }
   }
 
+  async getUserJobs(payload) {
+    try {
+      const users = await UserModel.findOne(payload).populate(
+        'job',
+        'name typeDay levenExperience description country city'
+      );
+      return users.job;
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  }
+
   async getUser(payload) {
     try {
       const user = await UserModel.findOne({ email: payload.email });
