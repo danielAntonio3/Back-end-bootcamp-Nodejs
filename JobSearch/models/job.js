@@ -52,19 +52,25 @@ const JobsSchema = new Schema({
     type: String,
     required: true,
     lowercase: true,
-    enum: ['face to face', 'remote', 'Hybrid']
+    enum: ['face to face', 'remote', 'Hybrid'],
   },
   levenExperience: {
     type: String,
     required: true,
     lowercase: true,
-    enum: ['practices', 'director', 'without experience', 'intermediate', 'executive']
+    enum: [
+      'practices',
+      'director',
+      'without experience',
+      'intermediate',
+      'executive',
+    ],
   },
   applicants: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Users',
-    }
+    },
   ],
   createIn: {
     type: Date,
