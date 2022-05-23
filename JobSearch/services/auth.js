@@ -8,7 +8,7 @@ class Auth {
   async login(payload) {
     const { email, password } = payload;
     const user = await userService.getUser({ email });
-    const isValid = await bcrypt.compare(password, user.password);
+    const isValid = await this.#compare(password, user.password);
     if (user && isValid) {
       return this.#getUserData(user);
     }
@@ -57,7 +57,7 @@ class Auth {
       name: user.name,
       email: user.email,
       id: user.id,
-      role: user.role
+      role: user.role,
     };
 
     const token = this.#createToken(userData);

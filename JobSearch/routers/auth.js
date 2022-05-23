@@ -7,7 +7,7 @@ function auths(app) {
 
   app.use('/api/auth', router);
 
-  router.get('/login', async (req, res) => {
+  router.post('/login', async (req, res) => {
     const result = await authService.login(req.body);
     return res.status(result.error ? 400 : 200).json({
       result,
