@@ -6,6 +6,7 @@ const { PORT } = require('./config');
 
 // Routes:
 const auth = require('./routers/auth');
+const user = require('./routers/user');
 
 const app = express();
 connection();
@@ -17,6 +18,7 @@ app.use(cookie());
 
 // Usando rutas:
 auth(app);
+user(app);
 
 app.get('/', (req, res) => {
   res.json({

@@ -1,9 +1,10 @@
 const UserModel = require('./../models/user');
+const dbError = require('../helpers/dbError');
 
 class User {
   async getByEmail(email) {
     try {
-      const user = await UserModel.find({ email });
+      const user = await UserModel.findOne({ email });
 
       return user;
     } catch (error) {
@@ -15,11 +16,12 @@ class User {
   async create(data) {
     try {
       const user = await UserModel.create(data);
-      return user;
+      return {
+        created: true,
+        user,
+      };
     } catch (error) {
-      console.log(error);
-
-      return { error };
+      return dbError(error);
     }
   }
 }
