@@ -46,6 +46,7 @@ class Auth {
 
     const token = this.#createToken(userData);
     return {
+      success: true,
       user: userData,
       token,
     };
